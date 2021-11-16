@@ -1,0 +1,38 @@
+# for development only
+
+services:
+  postgres:
+    image: postgres:latest
+    networks:
+      new:
+          aliases:
+              - database
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    healthcheck:
+      test: pg_isready -U postgres -d postgres
+      interval: 1s
+      timeout: 5s
+      retries: 5
+
+  migrations:
+    image: migrate/migrate:latest
+    networks:
+      - new
+    volumes:
+      - type: bind
+        source: ./db/migrations
+        target: /migrations
+    command: ["-path", "/migrations", "-database",  "postgres://postgres:password@database:5432/postgres?sslmode=disable", "up", "3"]
+    depends_on:
+      postgres:
+        condition: service_healthy
+    links: 
+      - postgres
+
+networks:
+  new:
