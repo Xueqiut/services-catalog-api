@@ -54,7 +54,6 @@ func TestServiceRoute(t *testing.T) {
 		{"filter services", "GET", "/api/v1/services?search=reporting", "", nil, http.StatusOK, expectedFilter},
 		{"sort services", "GET", "/api/v1/services?sort=name", "", nil, http.StatusOK, expectedSort},
 		{"pagination", "GET", "/api/v1/services?page=1&per_page=3", "", nil, http.StatusOK, expectedPagination},
-		{"pagination", "GET", "/api/v1/services?page=1&per_page=3", "", nil, http.StatusOK, expectedPagination},
 	}
 
 	for _, tc := range tests {

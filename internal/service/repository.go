@@ -33,7 +33,6 @@ func (r repository) list(filter, sort string, offset, limit int) ([]Service, err
 	
 	sql = fmt.Sprintf("%s OFFSET %d LIMIT %d", sql, offset, limit)
 
-    r.logger.Println(sql)
     rows, err := r.db.Query(sql)
     if err != nil {
         return nil, err

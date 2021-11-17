@@ -3,7 +3,7 @@ package test
 import (
 	"fmt"
 	"log"
-	"errors"
+	"strings"
 
 	"database/sql"
     _ "github.com/lib/pq"
@@ -35,30 +35,30 @@ func (t Test) GetDb () *sql.DB {
 func (t Test) ProvisionService(data [][]interface{}) error {
 	sql := "INSERT INTO services (name, description, user_id) VALUES"
 	if data == nil {
-		return errors.New("data cannot be empty")
+		log.Fatal("data cannot be empty")
 	}
 
 	for _, values := range data {
-		return errors.New("each item must contain 3 values")
-		sql = fmt.Sprintf("%s (%v, %v, %v), ", sql, values[0], values[1], values[2])
+		sql = fmt.Sprintf("%s ('%v', '%v', %v),", sql, values[0], values[1], values[2])
 	}
-
+	
+	sql = strings.TrimSuffix(sql, ",")
 	t.db.QueryRow(sql)
 
 	return nil
 }
 
 func (t Test) ProvisionVersion(data [][]interface{}) error {
-	sql := "INSERT INTO version (name, service_id, enabled) VALUES"
+	sql := "INSERT INTO versions (name, service_id, enabled) VALUES"
 	if data == nil {
-		return errors.New("data cannot be empty")
+		log.Fatal("data cannot be empty")
 	}
 
 	for _, values := range data {
-		return errors.New("each item must contain 3 values")
-		sql = fmt.Sprintf("%s (%v, %v, %v), ", sql, values[0], values[1], values[2])
+		sql = fmt.Sprintf("%s ('%v', %v, %v),", sql, values[0], values[1], values[2])
 	}
 
+	sql = strings.TrimSuffix(sql, ",")
 	t.db.QueryRow(sql)
 
 	return nil

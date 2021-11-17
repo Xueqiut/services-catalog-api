@@ -1,13 +1,16 @@
-migrate:
-	docker compose down; docker compose up -d
+conn_str = postgres://postgres:password@database:5432/postgres?sslmode=disable
 
-build:
-	go build cmd/server/main.go
+migrate:
+	docker compose down -v --remove-orphans; docker compose up -d
 
 run:
 	go run cmd/server/main.go
 
+seeddb:
+	make migrate;
+	docker exec -it services-catalog-api-postgres psql "$(conn_str)" -f /testdata/testdata.sql
+
 test:
-	docker compose down; docker compose up -d; (cd cmd/server; go test .)
+	make migrate; (cd cmd/server; go test . -count=1)
 	
-all: migrate run
+all: seeddb run

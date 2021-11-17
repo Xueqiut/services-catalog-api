@@ -3,10 +3,15 @@
 services:
   postgres:
     image: postgres:latest
+    container_name: services-catalog-api-postgres
     networks:
       new:
           aliases:
               - database
+    volumes:
+      - type: bind
+        source: ./testdata
+        target: /testdata
     ports:
       - 5432:5432
     environment:
