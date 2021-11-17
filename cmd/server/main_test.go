@@ -5,6 +5,7 @@ import (
 	"testing"
 	"log"
 
+	"github.com/Xueqiut/services-catalog-api/internal/config"
 	integration "github.com/Xueqiut/services-catalog-api/pkg/test"
 	helper "github.com/Xueqiut/services-catalog-api/internal/test"
 )

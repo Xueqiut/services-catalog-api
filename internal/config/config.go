@@ -2,8 +2,10 @@ package config
 
 import (
 	"os"
+	"runtime"
 	"log"
 	"io/ioutil"
+	"path/filepath"
 	"gopkg.in/yaml.v2"
 )
 
@@ -15,8 +17,12 @@ type Config struct {
 func Init() (*Config) {
 	c := Config{}
 
+	_, b, _, _ := runtime.Caller(0)
+    basepath := filepath.Dir(b)
+	file := filepath.Join(basepath, "../../config/dev.yml")
+
 	// load from YAML config file, ToDo: read based on env variable
-	bytes, err := ioutil.ReadFile("./config/dev.yml")
+	bytes, err := ioutil.ReadFile(file)
 	if err != nil {
 		log.Fatal(err)
 		os.Exit(-1)
