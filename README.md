@@ -57,11 +57,17 @@ An api services to manage the services catalog
 ### Getting Started
 Docker is needed to run the application in the local
 ``` shell
-# start the api services with seeded data
+# start the api services with seeded data on localhost:8080
 make run
 
 # run integration test
 make test
+
+# clean up database
+make migrate
+
+# add seeded data in directory /testdata
+make seeddb
 ```
 
 ### Future enhancement
@@ -69,6 +75,7 @@ make test
 * Better error handling
 * Better test coverage
 * Query String and Json Body validation
+* Better Debug logging
 * Better Pagination strategy
     * Return pre-generated query parameter in the response, which could be easily used in the following query
     * Cache the results in centralized cache to avoid querying DB every time
