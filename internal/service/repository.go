@@ -25,10 +25,10 @@ func (r repository) list(filter, sort string, offset, limit int) ([]Service, err
 
 	sql := "SELECT s.id, s.name, s.description, s.user_id, v.name FROM services s LEFT JOIN versions v ON s.id = v.service_id WHERE v.enabled = true"
 	if (filter != "") {
-		sql = fmt.Sprintf("%s AND name ILIKE '%%%s%%' OR description ILIKE '%%%s%%'", sql, filter, filter)
+		sql = fmt.Sprintf("%s AND s.name ILIKE '%%%s%%' OR s.description ILIKE '%%%s%%'", sql, filter, filter)
 	}
 	if (sort != "") {
-		sql = fmt.Sprintf("%s ORDER BY %s", sql, sort )
+		sql = fmt.Sprintf("%s ORDER BY s.%s", sql, sort )
 	}
 	
 	sql = fmt.Sprintf("%s OFFSET %d LIMIT %d", sql, offset, limit)

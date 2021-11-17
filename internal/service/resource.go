@@ -26,7 +26,7 @@ type resource struct {
 
 func (r resource) list(c *gin.Context) {
 	search := c.Query("search")
-	order := c.Query("order")
+	sort := c.Query("sort")
 	page := c.Query("page")
 	perPage := c.Query("per_page")
 
@@ -39,7 +39,7 @@ func (r resource) list(c *gin.Context) {
 
 	pages := pagination.NewPage(page, perPage, count)
 
-	services, err := r.repository.list(search, order, pages.Offset(), pages.Limit())
+	services, err := r.repository.list(search, sort, pages.Offset(), pages.Limit())
 	if err != nil {
 		r.logger.Fatal(err)
 		c.Error(err)

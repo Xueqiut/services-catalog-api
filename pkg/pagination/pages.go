@@ -7,7 +7,7 @@ import (
 
 var (
 	// DefaultPageSize specifies the default page size
-	DefaultPageSize = 1
+	DefaultPageSize = 2
 	// MaxPageSize specifies the maximum page size
 	MaxPageSize = 1000
 )
