@@ -70,6 +70,16 @@ make migrate
 make seeddb
 ```
 
+### Design considerations
+* To make the project easy to maintain and easy to add new features / endpoints, I design the layout of the project in two parts
+    * Handler layer, which implement the RESTful API endpoints. Please refer to file internal/service/resource.go file as an example
+    * Data Persistent layer, which talks to the database and manage the data entities used by the service. Please refer to file internal/service/repository.go file as an example
+    * A business layer between Handler layer and Data persistent layer could also be added as a future Enhancement, which implements all the business logic. I didn't do it in the project as a trade-off of fast shipment. And also the business logic is relatively straightforward here, a dedicated business layer seems redundant
+* To make sure I update and ship the project with confidence, I added integration test to cover the API call end to end (from Handler to Database)
+    * In my opinion, unit test is more helpful when testing business logic, and integration test is the best way to cover the functionality end to end. Given the business logic is very light in this project, and the I would like to ship the project fast, I prioritize the integration test.
+* To make the project easy to run and test for local development, I added docker and makefile. The automation tool saves me a lot of time on seting up postgres and it spins up a clean table everytime when I test and implement new features.
+
+
 ### Future enhancement
 * Add support for more endpoints
 * Better error handling
