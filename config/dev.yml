@@ -1,0 +1,2 @@
+conn_str: "postgres://postgres:password@localhost/postgres?sslmode=disable"
+port: "localhost:8080"

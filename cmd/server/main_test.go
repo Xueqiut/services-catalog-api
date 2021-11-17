@@ -32,7 +32,9 @@ var (
 )
 
 func TestServiceRoute(t *testing.T) {
-	testHelper, err := helper.NewTest("postgres://postgres:password@localhost/postgres?sslmode=disable")
+	cfg := config.Init()
+
+	testHelper, err := helper.NewTest(cfg.ConnStr)
 	if err != nil {
 		log.Fatal(err)
 	}

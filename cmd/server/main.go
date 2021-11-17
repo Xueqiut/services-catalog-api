@@ -7,6 +7,7 @@ import (
     "database/sql"
     _ "github.com/lib/pq"
 
+    "github.com/Xueqiut/services-catalog-api/internal/config"
     "github.com/Xueqiut/services-catalog-api/internal/service"
     "github.com/Xueqiut/services-catalog-api/internal/version"
 )
@@ -24,8 +25,9 @@ func setupRouter(db *sql.DB, logger *log.Logger) *gin.Engine {
 }
 
 func main() {
-	connStr := "postgres://postgres:password@localhost/postgres?sslmode=disable"
-	db, err := sql.Open("postgres", connStr)
+    cfg := config.Init()
+
+	db, err := sql.Open("postgres", cfg.ConnStr)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -38,5 +40,5 @@ func main() {
     logger.SetPrefix("services-catalog-api")
 
     r := setupRouter(db, logger)
-	r.Run("localhost:8080")
+	r.Run(cfg.Port)
 }
