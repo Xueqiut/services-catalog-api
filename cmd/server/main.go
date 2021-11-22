@@ -13,32 +13,32 @@ import (
 )
 
 func setupRouter(db *sql.DB, logger *log.Logger) *gin.Engine {
-	// Initialize a Gin router using Default.
+  // Initialize a Gin router using Default.
   r := gin.Default()
   v1 := r.Group("api/v1") 
   {
-      service.RegisterHandlers(v1, service.NewRepository(db, logger), logger)
-      version.RegisterHandlers(v1, version.NewRepository(db, logger), logger)
+    service.RegisterHandlers(v1, service.NewRepository(db, logger), logger)
+    version.RegisterHandlers(v1, version.NewRepository(db, logger), logger)
   }
     
-	return r
+  return r
 }
 
 func main() {
   cfg := config.Init()
 
-	db, err := sql.Open("postgres", cfg.ConnStr)
-	if err != nil {
-		log.Fatal(err)
-	}
-    pingErr := db.Ping()
-    if pingErr != nil {
-        log.Fatal(pingErr)
-    }
+  db, err := sql.Open("postgres", cfg.ConnStr)
+  if err != nil {
+    log.Fatal(err)
+  }
+  pingErr := db.Ping()
+  if pingErr != nil {
+    log.Fatal(pingErr)
+  }
 
-    logger := log.Default()
-    logger.SetPrefix("services-catalog-api")
+  logger := log.Default()
+  logger.SetPrefix("services-catalog-api")
 
-    r := setupRouter(db, logger)
-	r.Run(cfg.Port)
+  r := setupRouter(db, logger)
+  r.Run(cfg.Port)
 }
