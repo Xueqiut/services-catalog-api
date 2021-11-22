@@ -52,11 +52,11 @@ func (r resource) list(c *gin.Context) {
 
 func (r resource) get(c *gin.Context) {
 	i, err := strconv.Atoi(c.Param("id"))
-    if err != nil {
-        r.logger.Fatal(err)
-        c.Error(err)
+  if err != nil {
+    r.logger.Fatal(err)
+    c.Error(err)
 		return
-    }
+  }
 
 	service, err := r.repository.get(i)
 	if err != nil {
@@ -71,12 +71,12 @@ func (r resource) get(c *gin.Context) {
 func (r resource) post(c *gin.Context) {
 	var newService Service
 
-    // Call BindJSON to bind the received JSON to newService, which the deserializes the JSON
-    if err := c.BindJSON(&newService); err != nil {
-		r.logger.Fatal(err)
-        c.Error(err)
-        return
-    }
+  // Call BindJSON to bind the received JSON to newService, which the deserializes the JSON
+  if err := c.BindJSON(&newService); err != nil {
+	r.logger.Fatal(err)
+    c.Error(err)
+    return
+  }
 
 	id, err := r.repository.create(newService)
 	if err != nil {

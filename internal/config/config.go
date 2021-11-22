@@ -34,4 +34,4 @@ func Init() (*Config) {
 	}
 
 	return &c
-}
+} 

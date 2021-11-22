@@ -22,11 +22,11 @@ type resource struct {
 
 func (r resource) list(c *gin.Context) {
 	serviceId, err := strconv.Atoi(c.Param("id"))
-    if err != nil {
-        r.logger.Fatal(err)
-        c.Error(err)
+  if err != nil {
+    r.logger.Fatal(err)
+    c.Error(err)
 		return
-    }
+  }
 
 	versions, err := r.repository.list(serviceId)
 	if err != nil {
