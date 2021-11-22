@@ -6,7 +6,7 @@ import (
 	"strings"
 
 	"database/sql"
-    _ "github.com/lib/pq"
+  _ "github.com/lib/pq"
 )
 
 type Test struct {
@@ -19,11 +19,11 @@ func NewTest (connStr string) (Test, error) {
 		log.Fatal(err)
 		return Test{}, err
 	}
-    pingErr := db.Ping()
-    if pingErr != nil {
-        log.Fatal(pingErr)
+  pingErr := db.Ping()
+  if pingErr != nil {
+    log.Fatal(pingErr)
 		return Test{}, err
-    }
+  }
 
 	return Test{db}, nil
 }
