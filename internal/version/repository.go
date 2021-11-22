@@ -1,31 +1,32 @@
 package version
 
 import (
-	"log"
+  "log"
 
-	"database/sql"
+  "database/sql"
   _ "github.com/lib/pq"
 )
 
 // repository persists services in database
 type repository struct {
-	db     *sql.DB
-	logger *log.Logger
+  db     *sql.DB
+  logger *log.Logger
 }
 
 // NewRepository creates a new service repository
 func NewRepository(db *sql.DB, logger *log.Logger) repository {
-	return repository{db, logger}
+  return repository{db, logger}
 }
 
 func (r repository) list(serviceId int) ([]Version, error) {
-	var versions []Version
+  var versions []Version
 
   rows, err := r.db.Query("SELECT * FROM versions WHERE service_id = $1", serviceId)
   if err != nil {
     return nil, err
   }
   defer rows.Close()
+  
   // Loop through rows, using Scan to assign column data to struct fields.
   for rows.Next() {
     var version Version
@@ -35,5 +36,5 @@ func (r repository) list(serviceId int) ([]Version, error) {
     versions = append(versions, version)
   }
 
-	return versions, nil
+  return versions, nil
 }
